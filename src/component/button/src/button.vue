@@ -6,11 +6,11 @@
 
 <script>
 export default {
-  name: 'ElButton'
+  name: "ElButton",
 };
 </script>
 
-<style>
+<style lang="stylus" scoped>
 .button {
   background: #ffffff;
   border: 1px solid #eee;

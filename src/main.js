@@ -1,7 +1,7 @@
 import Vue from "vue"
 import App from "./app"
 
-import "./assets/style.css";
+import "./assets/style.styl";
 import ElButton from './component/button/index';
 
 const components = [
