@@ -9,9 +9,10 @@ module.exports = {
   entry: "./src/main.js",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "main.js"
+    filename: "main.js",
+    publicPath: "/"
   },
-  // devtool: 'inline-source-map',
+  devtool: "inline-source-map",
   devServer: {
     contentBase: path.join(__dirname, "dist"), // 服务器的根路径
     open: false,
@@ -28,12 +29,12 @@ module.exports = {
       hash: false
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
+      filename: "[name].css",
     }),
     new VueLoaderPlugin()
   ],
   module: {
-    rules: [//规则 
+    rules: [
       {
         test: /\.(css|stylus)$/,
         use: [
@@ -41,22 +42,47 @@ module.exports = {
           "css-loader",
           "stylus-loader"
         ],
-        exclude: /node_modules/
       },
       {
         test: /\.(styl|css)$/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
-          'stylus-loader'
+          "css-loader",
+          "stylus-loader"
         ],
-        exclude: /node_modules/
       },
       {
         test: /\.vue$/,
         loader: "vue-loader",
-        exclude: /node_modules/
       },
+      {
+        test: /\.(png|jpe?g|gif|bmp)$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            esModule: false,
+            limit: 8192,
+            name: '[name].[hash:8].[ext]',
+            outputPath: 'images/'
+          }
+        }]
+      },
+      {
+        test: /\.html$/,
+        use: [{
+          loader: 'html-loader',
+          options: {
+            minimize: true
+          }
+        }]
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
+        loader: 'file-loader',
+        options: {
+          name: './fonts/[name].[ext]'
+        }
+      }
     ]
   }
 }

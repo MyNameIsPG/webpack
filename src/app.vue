@@ -1,5 +1,6 @@
 <template>
-  <div id="app" style="background-color: rgba(17,17,17,0.88);position: absolute;left:500px;top: 0px;width: 400px;">
+  <div id="app">
+    <img src="./assets/img/1.png" alt="">
     <ul class="bf-range-list">
       {{value1}}
       <li>
@@ -30,6 +31,12 @@
         </div>
       </li>
     </ul>
+    我是背景图片
+    <br>
+    <div class="bg"></div>
+    <br>
+    <br>
+    <div class="bg1"></div>
   </div>
 </template>
 
