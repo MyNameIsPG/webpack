@@ -1,10 +1,9 @@
 <template>
   <div id="app">
-    <img src="./assets/img/1.png" alt="">
+    <img src="./assets/img/1.png" alt />
     <ul class="bf-range-list">
       {{value1}}
       <li>
-        
         <span class="bf-range-name">X</span>
         <div class="bf-section-range" id="sectionX">
           <range v-model="value1" />
@@ -12,15 +11,13 @@
       </li>
       {{value2}}
       <li>
-        
         <span class="bf-range-name">Y</span>
         <div class="bf-section-range" id="sectionY">
           <range v-model="value2" />
         </div>
       </li>
-       {{value3}}
+      {{value3}}
       <li>
-       
         <span class="bf-range-name">Z</span>
         <div class="bf-section-range" id="sectionZ">
           <range
@@ -30,18 +27,21 @@
           />
         </div>
       </li>
-    </ul>
-    我是背景图片
-    <br>
+    </ul>我是背景图片
+    <br />
     <div class="bg"></div>
-    <br>
-    <br>
+    <br />
+    <br />
     <div class="bg1"></div>
+    <br />
+    <img src="./assets/img/bgs.jpg" alt />
   </div>
 </template>
 
 <script>
 import range from "./range";
+import { add } from "./test";
+add(1, 2);
 export default {
   data() {
     return {

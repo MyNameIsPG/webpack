@@ -3,13 +3,14 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "development",
   entry: "./src/main.js",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "main.js",
+    filename: "js/[name].[chunkhash:8].js",
     publicPath: "/"
   },
   devtool: "inline-source-map",
@@ -24,31 +25,34 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: "./index.html",
+      template: "./public/index.html",
       filename: "index.html",
       hash: false
     }),
     new MiniCssExtractPlugin({
-      filename: "[name].css",
+      filename: "css/[name].[chunkhash:8].css",
     }),
     new VueLoaderPlugin()
   ],
   module: {
     rules: [
       {
-        test: /\.(css|stylus)$/,
-        use: [
-          "style-loader",
-          "css-loader",
-          "stylus-loader"
-        ],
-      },
-      {
-        test: /\.(styl|css)$/,
+        test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader",
-          "stylus-loader"
+          "postcss-loader"
+        ],
+      },
+      {
+        test: /\.(styl|stylus)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+          {
+            loader: "stylus-loader",
+          }
         ],
       },
       {
@@ -56,21 +60,31 @@ module.exports = {
         loader: "vue-loader",
       },
       {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"]
+          }
+        }
+      },
+      {
         test: /\.(png|jpe?g|gif|bmp)$/,
         use: [{
-          loader: 'url-loader',
+          loader: "url-loader",
           options: {
             esModule: false,
-            limit: 8192,
-            name: '[name].[hash:8].[ext]',
-            outputPath: 'images/'
+            name: "images/[name].[ext]",
+            publicPath: "../",
+            limit: 8192
           }
         }]
       },
       {
         test: /\.html$/,
         use: [{
-          loader: 'html-loader',
+          loader: "html-loader",
           options: {
             minimize: true
           }
@@ -78,9 +92,9 @@ module.exports = {
       },
       {
         test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          name: './fonts/[name].[ext]'
+          name: "./fonts/[name].[chunkhash:8].[ext]"
         }
       }
     ]
