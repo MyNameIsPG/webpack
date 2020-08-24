@@ -1,11 +1,12 @@
 import Vue from "vue"
 import App from "./app"
+import router from "./router";
 
 import "./assets/style.styl";
-import ElButton from './component/button/index';
+import PButton from './component/button/index';
 
 const components = [
-  ElButton
+  PButton
 ]
 
 const install = function (Vue, opts = {}) {
@@ -18,6 +19,7 @@ const install = function (Vue, opts = {}) {
 install(Vue);
 
 new Vue({
+  router,
   render: h => h(App)
 }).$mount("#app");
 
