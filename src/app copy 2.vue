@@ -2,8 +2,8 @@
   <div id="app">
     <div class="wrapper">
       <ul class="side">
-        <li v-for="(item, index) in sideBarData" :key="index">
-          <a :href="'#' + item.path">{{ item.name }}</a>
+        <li v-for="(item,index) in sideBarData" :key="index">
+          <a :href="'#'+item.path">{{item.name}}</a>
         </li>
       </ul>
       <div class="content">
@@ -21,26 +21,6 @@ export default {
         {
           path: "/button",
           name: "Button 图标",
-        },
-        {
-          path: "/radio",
-          name: "Radio 单选框",
-        },
-        {
-          path: "/checkbox",
-          name: "Checkbox 多选框",
-        },
-        {
-          path: "/input",
-          name: "Input 输入框",
-        },
-        {
-          path: "/select",
-          name: "Select 选择器",
-        },
-        {
-          path: "/form",
-          name: "Form 表单",
         },
       ],
     };
@@ -81,8 +61,6 @@ export default {
 
   .content {
     flex: 1;
-    padding-left: 20px;
-    box-sizing: border-box;
   }
 }
 </style>

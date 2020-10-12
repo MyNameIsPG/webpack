@@ -16,8 +16,8 @@ module.exports = {
   devtool: "inline-source-map",
   devServer: {
     contentBase: path.join(__dirname, "dist"), // 服务器的根路径
-    open: false,
-    port: 2000,
+    open: true,
+    port: 2001,
   },
   resolve: {
     extensions: [".js", ".ts", ".json", ".vue"]
