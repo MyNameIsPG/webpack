@@ -4,11 +4,11 @@ import router from "./router";
 
 import "./assets/style.styl";
 import baseLayout from "./views/base/baseLayout.vue"
-import PButton from './component/button/index';
+import EButton from './component/button/index';
 
 const components = [
   baseLayout,
-  PButton
+  EButton
 ]
 
 const install = function (Vue, opts = {}) {

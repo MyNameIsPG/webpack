@@ -1,8 +1,7 @@
-import PButton from './src/button.vue';
+import EButton from './src/index.vue';
 
-/* istanbul ignore next */
-PButton.install = function(Vue) {
-  Vue.component(PButton.name, PButton);
+EButton.install = function (Vue) {
+  Vue.component(EButton.name, EButton);
 };
 
-export default PButton;
+export default EButton;

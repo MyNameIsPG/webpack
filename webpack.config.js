@@ -15,6 +15,7 @@ module.exports = {
   },
   devtool: "inline-source-map",
   devServer: {
+    host: "172.18.1.103",
     contentBase: path.join(__dirname, "dist"), // 服务器的根路径
     open: true,
     port: 2001,

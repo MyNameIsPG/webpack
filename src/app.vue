@@ -3,7 +3,11 @@
     <div class="wrapper">
       <ul class="side">
         <li v-for="(item, index) in sideBarData" :key="index">
-          <a :href="'#' + item.path">{{ item.name }}</a>
+          <a
+            :href="'#' + item.path"
+            :class="item.path == selectIndex ? 'active' : ''"
+            >{{ item.name }}</a
+          >
         </li>
       </ul>
       <div class="content">
@@ -17,10 +21,11 @@
 export default {
   data() {
     return {
+      selectIndex: "",
       sideBarData: [
         {
           path: "/button",
-          name: "Button 图标",
+          name: "Button 按钮",
         },
         {
           path: "/radio",
@@ -44,6 +49,14 @@ export default {
         },
       ],
     };
+  },
+  created() {
+    this.selectIndex = this.$route.path;
+  },
+  watch: {
+    $route(router) {
+      this.selectIndex = router.path;
+    },
   },
 };
 </script>
@@ -72,7 +85,7 @@ export default {
         font-weight: 400;
         text-decoration: none;
 
-        &:hover {
+        &:hover, &.active {
           color: #409eff;
         }
       }
