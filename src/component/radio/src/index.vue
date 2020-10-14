@@ -15,10 +15,9 @@
         type="radio"
         aria-hidden="true"
         v-model="model"
-        @focus="focus = true"
-        @blur="focus = false"
         @change="handleChange"
         tabindex="-1"
+        :disabled="disabled"
       />
     </span>
     <span class="e-radio__label"
