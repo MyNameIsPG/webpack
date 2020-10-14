@@ -24,12 +24,12 @@
     </baseLayout>
 
     <baseLayout
-      title="基础用法"
-      subTitle="由于选项默认可见，不宜过多，若选项过多，建议使用 Select 选择器。"
+      title="单选框组"
+      subTitle="适用于在多个互斥的选项中选择的场景"
     >
       <e-radio-group v-model="radio3" @change="change3">
         <e-radio label="1">备选项</e-radio>
-        <e-radio label="2">备选项1</e-radio>
+        <e-radio label="2" disabled>备选项1</e-radio>
         <e-radio label="3"></e-radio>
       </e-radio-group>
     </baseLayout>
