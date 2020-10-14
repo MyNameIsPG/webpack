@@ -21,7 +21,10 @@ module.exports = {
     port: 2001,
   },
   resolve: {
-    extensions: [".js", ".ts", ".json", ".vue"]
+    extensions: [".js", ".ts", ".json", ".vue"],
+    alias: {
+      "@": path.resolve("src")
+    }
   },
   plugins: [
     new CleanWebpackPlugin(),
