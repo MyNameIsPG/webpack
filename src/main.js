@@ -9,6 +9,7 @@ import ERadio from "./component/radio/index"
 import ERadioGroup from "./component/radio-group/index"
 import ECheckbox from "./component/checkbox/index"
 import ECheckboxGroup from "./component/checkbox-group/index"
+import EInput from "./component/input/index"
 
 const components = [
   baseLayout,
@@ -16,10 +17,11 @@ const components = [
   ERadio,
   ERadioGroup,
   ECheckbox,
-  ECheckboxGroup
+  ECheckboxGroup,
+  EInput
 ]
 
-const install = function (Vue, opts = {}) {
+const install = Vue => {
   components.forEach(component => {
     Vue.component(component.name, component);
   });

@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "select",
+  name: "selects",
 };
 </script>
 

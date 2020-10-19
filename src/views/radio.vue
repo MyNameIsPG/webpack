@@ -38,7 +38,7 @@
 
 <script>
 export default {
-  name: "radio",
+  name: "radios",
   data() {
     return {
       radio: "1",

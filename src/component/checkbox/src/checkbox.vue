@@ -6,7 +6,6 @@
       disabled ? 'e-checkbox-disabled' : '',
     ]"
   >
-    {{ model }}
     <span class="e-checkbox__input">
       <span class="e-checkbox__inner"></span>
       <input
@@ -16,6 +15,7 @@
         type="checkbox"
         aria-hidden="true"
         v-model="model"
+        @change="handleChange"
         tabindex="-1"
         :disabled="disabled"
       />
@@ -27,12 +27,25 @@
 </template>
 
 <script>
+Array.prototype.remove = function (val) {
+  var index = this.indexOf(val);
+  if (index > -1) {
+    this.splice(index, 1);
+  }
+};
+import Emitter from "@/mixins/emitter";
 export default {
   name: "ECheckbox",
+  mixins: [Emitter],
   props: {
     value: [String, Number, Boolean],
     label: [String, Number, Boolean],
     disabled: Boolean,
+  },
+  data() {
+    return {
+      checked: false,
+    };
   },
   computed: {
     isGroup() {
@@ -41,19 +54,52 @@ export default {
         if (parent.$options.name !== "ECheckboxGroup") {
           parent = parent.$parent;
         } else {
-          this._radioGroup = parent;
+          this._checkboxGroup = parent;
           return true;
         }
       }
       return false;
     },
+    isChecked() {
+      let data = this._checkboxGroup.value;
+      let keys = "";
+      if (data) {
+        data.forEach((item) => {
+          if (item === this.label) {
+            keys = item;
+          }
+        });
+      }
+      return keys;
+    },
     model: {
       get() {
-        return this.isGroup ? this._radioGroup.value : this.value;
+        return this.isGroup ? this.isChecked : this.value;
       },
       set(val) {
+        this.checked = val;
         this.$emit("input", val);
       },
+    },
+  },
+  methods: {
+    handleChange() {
+      if (!this.disabled) {
+        this.$nextTick(() => {
+          if (this.isGroup) {
+            let data = this._checkboxGroup.value;
+            if (this.checked) {
+              data.push(this.label);
+            } else {
+              data.remove(this.label);
+            }
+            this.isGroup &&
+              this.dispatch("ECheckboxGroup", "handleChange", data);
+          } else {
+            this.$emit("change", this.value);
+          }
+        });
+      }
     },
   },
 };
