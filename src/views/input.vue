@@ -18,6 +18,10 @@
     </baseLayout>
     <baseLayout title="文本域">
       <e-input type="textarea" />
+      <br /><br />
+      <e-input type="textarea" rows="5" placeholder="请输入内容" />
+      <br /><br />
+      <e-input type="textarea" rows="5" disabled placeholder="请输入内容" />
     </baseLayout>
   </div>
 </template>

@@ -1,15 +1,27 @@
 <template>
   <div
-    class="e-input"
-    :class="[disabled ? 'e-input-disabled' : '', size ? 'e-input-' + size : '']"
+    :class="[
+      type !== 'textarea' ? 'e-input' : 'e-textarea',
+      disabled ? 'e-input-disabled' : '',
+      size ? 'e-input-' + size : '',
+    ]"
   >
     <input
+      v-if="type !== 'textarea'"
       class="e-input__inner"
       :value="value"
       :placeholder="placeholder"
       :disabled="disabled"
       :readonly="readonly"
     />
+    <textarea
+      v-else
+      class="e-input__inner"
+      :rows="rows"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :readonly="readonly"
+    ></textarea>
   </div>
 </template>
 
@@ -26,7 +38,9 @@ export default {
         return ["medium", "small", "mini"].includes(val);
       },
     },
+    type: String,
     placeholder: String,
+    rows: Number,
   },
 };
 </script>
@@ -92,6 +106,48 @@ export default {
     .e-input__inner {
       height: 28px;
       line-height: 28px;
+    }
+  }
+}
+
+.e-textarea {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  vertical-align: bottom;
+  font-size: 14px;
+
+  .e-input__inner {
+    display: block;
+    resize: vertical;
+    padding: 5px 15px;
+    line-height: 1.5;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: inherit;
+    color: #606266;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+    transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+    &:hover {
+      border-color: #c0c4cc;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #409eff;
+    }
+  }
+
+  &.e-input-disabled {
+    .e-input__inner {
+      background-color: #f5f7fa;
+      border-color: #e4e7ed;
+      color: #c0c4cc;
+      cursor: not-allowed;
     }
   }
 }
