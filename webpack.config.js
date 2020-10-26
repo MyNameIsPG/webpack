@@ -98,7 +98,7 @@ module.exports = {
         test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
         loader: "file-loader",
         options: {
-          name: "./fonts/[name].[chunkhash:8].[ext]"
+          name: "./fonts/[name].[ext]"
         }
       }
     ]

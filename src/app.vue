@@ -24,6 +24,10 @@ export default {
       selectIndex: "",
       sideBarData: [
         {
+          path: "/icon",
+          name: "Icon 图标",
+        },
+        {
           path: "/button",
           name: "Button 按钮",
         },
@@ -52,6 +56,24 @@ export default {
   },
   created() {
     this.selectIndex = this.$route.path;
+  },
+  mounted() {
+    // let inp = document.getElementById("inp");
+    // inp.addEventListener("input", this.debounce(this.sayHi, 500));
+  },
+  methods: {
+    debounce(fn, delay = 500, immediate) {
+      let timeout = null;
+      return function () {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          fn.apply(this, arguments);
+        }, delay);
+      };
+    },
+    sayHi(event) {
+      console.log(event);
+    },
   },
   watch: {
     $route(router) {

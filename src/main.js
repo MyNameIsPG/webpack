@@ -10,6 +10,9 @@ import ERadioGroup from "./component/radio-group/index"
 import ECheckbox from "./component/checkbox/index"
 import ECheckboxGroup from "./component/checkbox-group/index"
 import EInput from "./component/input/index"
+import ESelect from "./component/select/index"
+import EOption from "./component/oprion/index"
+import EOptionGroup from "./component/option-group/index"
 
 const components = [
   baseLayout,
@@ -18,7 +21,10 @@ const components = [
   ERadioGroup,
   ECheckbox,
   ECheckboxGroup,
-  EInput
+  EInput,
+  ESelect,
+  EOption,
+  EOptionGroup
 ]
 
 const install = Vue => {

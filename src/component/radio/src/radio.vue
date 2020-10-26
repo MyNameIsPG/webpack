@@ -66,7 +66,6 @@ export default {
       },
     },
   },
-
   methods: {
     handleChange() {
       if (!this.disabled) {

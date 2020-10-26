@@ -13,6 +13,9 @@
       :placeholder="placeholder"
       :disabled="disabled"
       :readonly="readonly"
+      @focus="handleFocus"
+      @blur="handleBlur"
+      @change="handleChange"
     />
     <textarea
       v-else
@@ -21,6 +24,9 @@
       :placeholder="placeholder"
       :disabled="disabled"
       :readonly="readonly"
+      @focus="handleFocus"
+      @blur="handleBlur"
+      @change="handleChange"
     ></textarea>
   </div>
 </template>
@@ -41,6 +47,20 @@ export default {
     type: String,
     placeholder: String,
     rows: Number,
+  },
+  methods: {
+    handleInput(event) {
+      this.$emit("input", event);
+    },
+    handleFocus(event) {
+      this.$emit("focus", event);
+    },
+    handleBlur(event) {
+      this.$emit("blur", event);
+    },
+    handleChange(event) {
+      this.$emit("change", event);
+    },
   },
 };
 </script>
