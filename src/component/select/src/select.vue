@@ -7,6 +7,7 @@
       @blur="handelBlur"
       :disabled="disabled"
       v-model="label"
+      :suffix-icon="visible ? 'icon-e-arrow-up' : 'icon-e-arrow-down'"
     />
     <e-option-group :visible="visible">
       <slot />
