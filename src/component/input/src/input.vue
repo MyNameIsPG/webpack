@@ -2,32 +2,71 @@
   <div
     :class="[
       type !== 'textarea' ? 'e-input' : 'e-textarea',
-      disabled ? 'e-input-disabled' : '',
       size ? 'e-input-' + size : '',
+      {
+        'e-input-disabled': disabled,
+        'e-input--prefix': $slots.prefix || prefixIcon,
+        'e-input--suffix':
+          $slots.suffix || suffixIcon || clearable || showPassword,
+      },
     ]"
   >
-    <input
-      v-if="type !== 'textarea'"
-      class="e-input__inner"
-      :value="value"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :readonly="readonly"
-      @focus="handleFocus"
-      @blur="handleBlur"
-      @change="handleChange"
-    />
-    <textarea
-      v-else
-      class="e-input__inner"
-      :rows="rows"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :readonly="readonly"
-      @focus="handleFocus"
-      @blur="handleBlur"
-      @change="handleChange"
-    ></textarea>
+    <template v-if="type !== 'textarea'">
+      <input
+        ref="input"
+        class="e-input__inner"
+        :value="value"
+        :type="showPassword ? (passwordVisible ? 'text' : 'password') : 'text'"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :readonly="readonly"
+        @input="handleInput"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        @change="handleChange"
+      />
+      <!-- 前置内容 -->
+      <span class="e-input__prefix" v-if="$slots.prefix || prefixIcon">
+        <span class="e-input__prefix-inner">
+          <slot name="prefix"></slot>
+          <i class="e-input-icon" v-if="prefixIcon" :class="prefixIcon"> </i>
+        </span>
+      </span>
+      <span
+        class="e-input__suffix"
+        v-if="clearable || showPassword || suffixIcon || $slots.suffix"
+      >
+        <span class="e-input__suffix-inner">
+          <i
+            class="e-input-icon icon-e-reeor"
+            v-if="clearable"
+            @click="clear"
+          ></i>
+          <i
+            class="e-input-icon icon-e-browse"
+            v-if="showPassword"
+            @click="handlePasswordVisible"
+          ></i>
+          <slot name="suffix"></slot>
+          <i class="e-input-icon" v-if="suffixIcon" :class="suffixIcon"> </i>
+        </span>
+      </span>
+    </template>
+    <template v-else>
+      <textarea
+        ref="textarea"
+        class="e-input__inner"
+        :value="value"
+        :rows="rows"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :readonly="readonly"
+        @input="handleInput"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        @change="handleChange"
+      ></textarea>
+    </template>
   </div>
 </template>
 
@@ -47,10 +86,33 @@ export default {
     type: String,
     placeholder: String,
     rows: Number,
+    // 是否清空
+    clearable: Boolean,
+    // 是否密码框
+    showPassword: Boolean,
+    prefixIcon: String,
+    suffixIcon: String,
+  },
+  data() {
+    return {
+      hovering: false,
+      focused: false,
+      isComposing: false,
+      passwordVisible: false,
+    };
   },
   methods: {
+    getInput() {
+      return this.$refs.input || this.$refs.textarea;
+    },
+    focus() {
+      this.getInput().focus();
+    },
+    blur() {
+      this.getInput().blur();
+    },
     handleInput(event) {
-      this.$emit("input", event);
+      this.$emit("input", event.target.value);
     },
     handleFocus(event) {
       this.$emit("focus", event);
@@ -61,6 +123,15 @@ export default {
     handleChange(event) {
       this.$emit("change", event);
     },
+    handlePasswordVisible() {
+      this.passwordVisible = !this.passwordVisible;
+      this.focus();
+    },
+    clear() {
+      this.$emit("input", "");
+      this.$emit("change", "");
+      this.$emit("clear");
+    },
   },
 };
 </script>
@@ -70,6 +141,7 @@ export default {
   position: relative;
   font-size: 14px;
   display: inline-block;
+  width: 100%;
 
   .e-input__inner {
     -webkit-appearance: none;
@@ -96,6 +168,91 @@ export default {
     &:focus {
       outline: none;
       border-color: #409eff;
+    }
+  }
+
+  .e-input__prefix {
+    position: absolute;
+    height: 100%;
+    left: 5px;
+    top: 0;
+    text-align: center;
+    color: #c0c4cc;
+    transition: all 0.3s;
+    width: 25px;
+
+    .e-input__prefix-inner {
+      line-height: 40px;
+
+      .e-input-icon {
+        font-size: 18px;
+        color: #c0c4cc;
+        transition: color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+        &:hover {
+          color: #909399;
+        }
+      }
+    }
+  }
+
+  .e-input__suffix {
+    position: absolute;
+    height: 100%;
+    right: 5px;
+    top: 0;
+    text-align: center;
+    color: #c0c4cc;
+    transition: all 0.3s;
+    width: 25px;
+
+    .e-input__suffix-inner {
+      line-height: 40px;
+      width: 25px;
+
+      .icon-e-reeor, .icon-e-browse {
+        cursor: pointer;
+      }
+
+      .e-input-icon {
+        font-size: 18px;
+        color: #c0c4cc;
+        transition: color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+        &:hover {
+          color: #909399;
+        }
+      }
+    }
+  }
+
+  &.e-input--prefix {
+    .e-input__inner {
+      padding-left: 30px;
+    }
+  }
+
+  &.e-input--suffix {
+    .e-input__inner {
+      padding-right: 30px;
+    }
+  }
+
+  &.e-input--suffix + &.e-input-medium {
+    .e-input__suffix-inner {
+      line-height: 36px;
+    }
+  }
+
+  &.e-input--suffix + &.e-input-small {
+    .e-input__suffix-inner {
+      line-height: 32px;
+    }
+  }
+
+  &.e-input--suffix + &.e-input-mini {
+    .e-input__suffix-inner {
+      line-height: 28px;
     }
   }
 
