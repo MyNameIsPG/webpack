@@ -8,10 +8,12 @@
       circle ? 'e-button-circle' : '',
       disabled ? 'e-button-disabled' : '',
       size ? 'e-button-' + size : '',
+      icon ? 'e-button-icon' : '',
     ]"
     @click="handleClick"
   >
     <slot></slot>
+    <span v-if="icon" class="icons" :class="icon"></span>
   </button>
 </template>
 
@@ -44,6 +46,7 @@ export default {
     round: Boolean,
     circle: Boolean,
     disabled: Boolean,
+    icon: String,
   },
   methods: {
     handleClick(evt) {
@@ -62,6 +65,7 @@ export default {
   border-radius: 4px;
   border: 1px solid #dcdfe6;
   cursor: pointer;
+  line-height: 1;
 
   &.e-button-default {
     background: #fff;
@@ -437,5 +441,24 @@ export default {
       }
     }
   }
+
+  &.e-button-default {
+    &.e-button-icon {
+      .icons {
+        color: #333;
+      }
+    }
+  }
+
+  &.e-button-icon {
+    .icons {
+      color: #fff;
+      font-size: 14px;
+    }
+  }
+}
+
+.e-button + .e-button {
+  margin-left: 10px;
 }
 </style>

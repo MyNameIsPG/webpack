@@ -6,7 +6,7 @@
       @focus="handleFocus"
       @blur="handelBlur"
       :disabled="disabled"
-      v-model="label"
+      :value="label"
       :suffix-icon="visible ? 'icon-e-arrow-up' : 'icon-e-arrow-down'"
     />
     <e-option-group :visible="visible">
@@ -21,31 +21,40 @@ import EInput from "../../input/src/input.vue";
 export default {
   name: "ESelect",
   components: { EOptionGroup, EInput },
+  provide() {
+    return {
+      eSelect: this,
+    };
+  },
   props: {
     placeholder: String,
     disabled: Boolean,
+    value: String,
   },
   data() {
     return {
       visible: false,
       label: "",
-      value: "",
     };
   },
   created() {
-    this.$on("handleOptionClick", (obj) => {
-      this.label = obj.label;
-      this.value = obj.value;
-      this.$emit("input", obj.value);
-      this.handelBlur();
+    this.$on("handleChange", (value) => {
+      this.handleChange(value);
     });
   },
   methods: {
+    setValue(value) {
+      this.$emit("input", value);
+    },
     handleFocus() {
       this.visible = true;
     },
     handelBlur() {
       this.visible = false;
+    },
+    handleChange(value) {
+      this.$emit("change", value);
+      this.$parent.$emit("validate");
     },
   },
 };

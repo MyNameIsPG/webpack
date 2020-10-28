@@ -6,9 +6,7 @@
       isSelected == value ? 'selected' : '',
     ]"
     @mousedown="selectOptionClick"
-  >
-    {{ label }}
-  </li>
+  >{{ label }}</li>
 </template>
 
 <script>
@@ -16,6 +14,7 @@ import Emitter from "@/mixins/emitter";
 export default {
   name: "EOption",
   mixins: [Emitter],
+  inject: ["eSelect"],
   props: {
     value: [String, Number, Boolean],
     label: [String, Number],
@@ -35,16 +34,28 @@ export default {
       return false;
     },
     isSelected() {
-      return this.isGroup ? this._select.value : "";
+      return this.isGroup ? this.eSelect.value : "";
     },
+  },
+  created() {
+    if (this.value === this.eSelect.value) {
+      this.eSelect.label = this.label;
+    }
   },
   methods: {
     selectOptionClick() {
       if (!this.disabled) {
-        this.dispatch("ESelect", "handleOptionClick", {
-          label: this.label,
-          value: this.value,
-        });
+        this.eSelect.$emit("input", this.value);
+        this.eSelect.label = this.label;
+        this.eSelect.handelBlur();
+        this.dispatch("ESelect", "handleChange", this.value);
+      }
+    },
+  },
+  watch: {
+    "eSelect.value"() {
+      if (this.value === this.eSelect.value) {
+        this.eSelect.label = this.label;
       }
     },
   },

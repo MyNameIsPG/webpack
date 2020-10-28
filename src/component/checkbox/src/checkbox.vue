@@ -20,9 +20,9 @@
         :disabled="disabled"
       />
     </span>
-    <span class="e-checkbox__label"
-      ><slot>{{ label }}</slot></span
-    >
+    <span class="e-checkbox__label">
+      <slot>{{ label }}</slot>
+    </span>
   </label>
 </template>
 
@@ -98,6 +98,7 @@ export default {
           } else {
             this.$emit("change", this.value);
           }
+          this.$parent.$emit("validate");
         });
       }
     },

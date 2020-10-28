@@ -29,26 +29,15 @@
       <span class="e-input__prefix" v-if="$slots.prefix || prefixIcon">
         <span class="e-input__prefix-inner">
           <slot name="prefix"></slot>
-          <i class="e-input-icon" v-if="prefixIcon" :class="prefixIcon"> </i>
+          <i class="e-input-icon" v-if="prefixIcon" :class="prefixIcon"></i>
         </span>
       </span>
-      <span
-        class="e-input__suffix"
-        v-if="clearable || showPassword || suffixIcon || $slots.suffix"
-      >
+      <span class="e-input__suffix" v-if="clearable || showPassword || suffixIcon || $slots.suffix">
         <span class="e-input__suffix-inner">
-          <i
-            class="e-input-icon icon-e-reeor"
-            v-if="clearable"
-            @click="clear"
-          ></i>
-          <i
-            class="e-input-icon icon-e-browse"
-            v-if="showPassword"
-            @click="handlePasswordVisible"
-          ></i>
+          <i class="e-input-icon icon-e-reeor" v-if="clearable" @click="clear"></i>
+          <i class="e-input-icon icon-e-browse" v-if="showPassword" @click="handlePasswordVisible"></i>
           <slot name="suffix"></slot>
-          <i class="e-input-icon" v-if="suffixIcon" :class="suffixIcon"> </i>
+          <i class="e-input-icon" v-if="suffixIcon" :class="suffixIcon"></i>
         </span>
       </span>
     </template>
@@ -113,6 +102,7 @@ export default {
     },
     handleInput(event) {
       this.$emit("input", event.target.value);
+      this.$parent.$emit("validate");
     },
     handleFocus(event) {
       this.$emit("focus", event);
@@ -325,6 +315,20 @@ export default {
       border-color: #e4e7ed;
       color: #c0c4cc;
       cursor: not-allowed;
+    }
+  }
+}
+
+.is-error {
+  .e-input {
+    .e-input__inner {
+      border-color: #f56c6c;
+    }
+  }
+
+  .e-textarea {
+    .e-input__inner {
+      border-color: #f56c6c;
     }
   }
 }

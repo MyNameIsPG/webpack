@@ -41,19 +41,11 @@
     </baseLayout>
     <baseLayout title="圆圈按钮" subTitle="是否圆形按钮">
       <div>
-        <e-button circle><i class="icon icone e-pic"></i></e-button>
-        <e-button type="primary" circle
-          ><i class="icon icone e-arrow-left"></i
-        ></e-button>
-        <e-button type="success" circle
-          ><i class="icon icone e-arrow-right"></i
-        ></e-button>
-        <e-button type="info" circle
-          ><i class="icon icone e-search"></i
-        ></e-button>
-        <e-button type="danger" circle
-          ><i class="icon icone e-prompt"></i
-        ></e-button>
+        <e-button circle icon="icon-e-pic"></e-button>
+        <e-button type="primary" circle icon="icon-e-arrow-left"></e-button>
+        <e-button type="success" circle icon="icon-e-arrow-right"></e-button>
+        <e-button type="info" circle icon="icon-e-search"></e-button>
+        <e-button type="danger" circle icon="icon-e-prompt"></e-button>
       </div>
     </baseLayout>
     <baseLayout title="禁用按钮" subTitle="是否禁用状态">

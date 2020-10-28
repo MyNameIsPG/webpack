@@ -14,6 +14,7 @@ import ESelect from "./component/select/index"
 import EOption from "./component/oprion/index"
 import EOptionGroup from "./component/option-group/index"
 import EForm from "./component/form/index"
+import EFormItem from "./component/form-item/index"
 
 const components = [
   baseLayout,
@@ -26,7 +27,8 @@ const components = [
   ESelect,
   EOption,
   EOptionGroup,
-  EForm
+  EForm,
+  EFormItem
 ]
 
 const install = Vue => {
