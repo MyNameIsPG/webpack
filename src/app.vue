@@ -6,8 +6,7 @@
           <a
             :href="'#' + item.path"
             :class="item.path == selectIndex ? 'active' : ''"
-            >{{ item.name }}</a
-          >
+          >{{ item.name }}</a>
         </li>
       </ul>
       <div class="content">
@@ -42,6 +41,10 @@ export default {
         {
           path: "/input",
           name: "Input 输入框",
+        },
+        {
+          path: "/input-number",
+          name: "InputNumber 计数器",
         },
         {
           path: "/select",

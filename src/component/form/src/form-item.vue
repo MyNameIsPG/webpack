@@ -32,9 +32,11 @@ export default {
   },
   created() {
     this.$on("validate", () => {
-      let rule = this.eForm.rules[this.prop];
-      if (rule) {
-        this.validate();
+      if (this.prop) {
+        let rule = this.eForm.rules[this.prop];
+        if (rule) {
+          this.validate();
+        }
       }
     });
   },

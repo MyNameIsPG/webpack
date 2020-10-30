@@ -1,5 +1,6 @@
 <template>
   <button
+    type="button"
     class="e-button"
     :class="[
       'e-button-' + type,
