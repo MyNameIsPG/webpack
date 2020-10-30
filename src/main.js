@@ -16,6 +16,7 @@ import EOptionGroup from "./component/option-group/index"
 import ERadio from "./component/radio/index"
 import ERadioGroup from "./component/radio-group/index"
 import ESelect from "./component/select/index"
+import ESwitch from "./component/switch/index"
 
 const components = [
   baseLayout,
@@ -30,7 +31,8 @@ const components = [
   EOptionGroup,
   ERadio,
   ERadioGroup,
-  ESelect
+  ESelect,
+  ESwitch
 ]
 
 const install = Vue => {

@@ -51,6 +51,22 @@ export default {
           name: "Select 选择器",
         },
         {
+          path: "/cascader",
+          name: "Cascader 级联选择器",
+        },
+        {
+          path: "/switch",
+          name: "Switch 开关",
+        },
+        {
+          path: "/slider",
+          name: "Slider 滑块",
+        },
+        {
+          path: "/time-picker",
+          name: "TimePicker 时间选择器",
+        },
+        {
           path: "/form",
           name: "Form 表单",
         },
