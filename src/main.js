@@ -7,6 +7,7 @@ import baseLayout from "./views/base/baseLayout.vue"
 import EButton from "./component/button/index"
 import ECheckbox from "./component/checkbox/index"
 import ECheckboxGroup from "./component/checkbox-group/index"
+import EDatePicker from "./component/date-picker/index"
 import EForm from "./component/form/index"
 import EFormItem from "./component/form-item/index"
 import EInput from "./component/input/index"
@@ -16,6 +17,7 @@ import EOptionGroup from "./component/option-group/index"
 import ERadio from "./component/radio/index"
 import ERadioGroup from "./component/radio-group/index"
 import ESelect from "./component/select/index"
+import ESlider from "./component/slider/index"
 import ESwitch from "./component/switch/index"
 
 const components = [
@@ -23,6 +25,7 @@ const components = [
   EButton,
   ECheckbox,
   ECheckboxGroup,
+  EDatePicker,
   EForm,
   EFormItem,
   EInput,
@@ -32,6 +35,7 @@ const components = [
   ERadio,
   ERadioGroup,
   ESelect,
+  ESlider,
   ESwitch
 ]
 

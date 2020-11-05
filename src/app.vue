@@ -67,6 +67,10 @@ export default {
           name: "TimePicker 时间选择器",
         },
         {
+          path: "/date-picker",
+          name: "DatePicker 日期选择器",
+        },
+        {
           path: "/form",
           name: "Form 表单",
         },
