@@ -4,6 +4,7 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const WebpackBar = require('webpackbar');
 
 module.exports = {
   mode: "development",
@@ -27,6 +28,7 @@ module.exports = {
     }
   },
   plugins: [
+    new WebpackBar(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: "./public/index.html",

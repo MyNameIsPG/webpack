@@ -5,7 +5,7 @@
       disabled ? 'is-disabled' : '',
       isSelected == value ? 'selected' : '',
     ]"
-    @mousedown="selectOptionClick"
+    @click="selectOptionClick"
   >{{ label }}</li>
 </template>
 
@@ -47,7 +47,9 @@ export default {
       if (!this.disabled) {
         this.eSelect.$emit("input", this.value);
         this.eSelect.label = this.label;
-        this.eSelect.handelBlur();
+        setTimeout(() => {
+          this.eSelect.visible = false;
+        }, 0);
         this.dispatch("ESelect", "handleChange", this.value);
       }
     },

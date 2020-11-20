@@ -68,6 +68,10 @@ export default {
           value: "选项5",
           label: "北京烤鸭",
         },
+        {
+          value: "选项6",
+          label: "北京烤鸭",
+        },
       ],
       value1: "选项1",
       value2: "",

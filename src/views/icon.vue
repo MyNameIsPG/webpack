@@ -3,7 +3,9 @@
     <ul class="iconList">
       <li v-for="(item, index) in list" :key="index">
         <div>
-          <div class="icon"><span :class="item"></span></div>
+          <div class="icon">
+            <span :class="item"></span>
+          </div>
           <p class="name">{{ item }}</p>
         </div>
       </li>
@@ -17,6 +19,19 @@ export default {
   data() {
     return {
       list: [
+        "icon-e-query",
+        "icon-e-arrow-up1",
+        "icon-e-arrow-left1",
+        "icon-e-arrow-down1",
+        "icon-e-arrow-right1",
+        "icon-e-page-up",
+        "icon-e-page-right",
+        "icon-e-page-down",
+        "icon-e-page-left",
+        "icon-e-turning-up",
+        "icon-e-turning-right",
+        "icon-e-turning-down",
+        "icon-e-turning-left",
         "icon-e-pic",
         "icon-e-camera-fill",
         "icon-e-Notvisible",

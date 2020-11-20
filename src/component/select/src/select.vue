@@ -1,10 +1,8 @@
 <template>
-  <div class="e-select">
+  <div class="e-select" v-popup-click="visible" :disabled="disabled">
     <e-input
       readonly
       :placeholder="placeholder"
-      @focus="handleFocus"
-      @blur="handelBlur"
       :disabled="disabled"
       :value="label"
       :suffix-icon="visible ? 'icon-e-arrow-up' : 'icon-e-arrow-down'"
@@ -18,9 +16,13 @@
 <script>
 import EOptionGroup from "./option-group.vue";
 import EInput from "../../input/src/input.vue";
+import popupClick from "@/utils/directives/popup-click";
 export default {
   name: "ESelect",
   components: { EOptionGroup, EInput },
+  directives: {
+    popupClick,
+  },
   provide() {
     return {
       eSelect: this,
@@ -45,12 +47,6 @@ export default {
   methods: {
     setValue(value) {
       this.$emit("input", value);
-    },
-    handleFocus() {
-      this.visible = true;
-    },
-    handelBlur() {
-      this.visible = false;
     },
     handleChange(value) {
       this.$emit("change", value);

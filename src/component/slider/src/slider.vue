@@ -33,8 +33,6 @@ export default {
       let eSliderButton = this.$refs.eSliderButton;
       if (eSliderBar) {
         eSliderBar.style.width = value + "%";
-        console.log(eSliderBar.width);
-
         eSliderButton.style.left = value + "%";
       }
     },

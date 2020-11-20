@@ -71,8 +71,20 @@ export default {
           name: "DatePicker 日期选择器",
         },
         {
+          path: "/scrollbar",
+          name: "Scrollbar 滚动条",
+        },
+        {
           path: "/form",
           name: "Form 表单",
+        },
+        {
+          path: "/popper",
+          name: "Popper 弹层",
+        },
+        {
+          path: "/tree",
+          name: "Tree 树形控件",
         },
       ],
     };

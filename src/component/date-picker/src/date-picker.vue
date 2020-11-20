@@ -1,35 +1,38 @@
 <template>
-  <div class="e-date-editor">
+  <div class="e-date-editor" v-popup-click="visible">
     <e-input
       :value="formatValue"
       prefixIcon="icon-e-calendar"
       :placeholder="placeholder"
       clearable
+      @focus="hanldeFocus"
     />
-    <div class="e-picker-panel">
-      <div class="e-date-picker__header">
-        <span @click="handlePrevYear" class="icon icon1 icon-e-double-arrow-left"></span>
-        <span
-          @click="handlePrevMonth"
-          v-show="headerType=='date'"
-          class="icon icon2 icon-e-arrow-left"
-        ></span>
-        <span class="text" v-show="headerType=='year'">{{ yearText }}</span>
-        <span @click="handleMonth" class="text" v-show="headerType=='month'">{{ monthText }}</span>
-        <span @click="handleDate" class="text" v-show="headerType=='date'">{{ dateText }}</span>
-        <span @click="handleNextYear" class="icon icon4 icon-e-double-arro-right"></span>
-        <span
-          @click="handleNextMonth"
-          v-show="headerType=='date'"
-          class="icon icon3 icon-e-arrow-right"
-        ></span>
+    <e-popper :visible="visible" width="294px" :height="headerType=='date' ? '360px' : '298px'">
+      <div class="e-picker-panel">
+        <div class="e-date-picker__header">
+          <span @click="handlePrevYear" class="icon icon1 icon-e-double-arrow-left"></span>
+          <span
+            @click="handlePrevMonth"
+            v-show="headerType=='date'"
+            class="icon icon2 icon-e-arrow-left"
+          ></span>
+          <span class="text" v-show="headerType=='year'">{{ yearText }}</span>
+          <span @click="handleMonth" class="text" v-show="headerType=='month'">{{ monthText }}</span>
+          <span @click="handleDate" class="text" v-show="headerType=='date'">{{ dateText }}</span>
+          <span @click="handleNextYear" class="icon icon4 icon-e-double-arro-right"></span>
+          <span
+            @click="handleNextMonth"
+            v-show="headerType=='date'"
+            class="icon icon3 icon-e-arrow-right"
+          ></span>
+        </div>
+        <div class="e-picker-panel__content">
+          <e-date-table :date="date" v-show="headerType=='date'" @pick="handleDatePick"></e-date-table>
+          <e-month-table :date="date" v-show="headerType == 'month'" @pick="handleMonthPick"></e-month-table>
+          <e-year-table :date="date" v-show="headerType == 'year'" @pick="handleYearPick"></e-year-table>
+        </div>
       </div>
-      <div class="e-picker-panel__content">
-        <e-date-table :date="date" v-show="headerType=='date'" @pick="handleDatePick"></e-date-table>
-        <e-month-table :date="date" v-show="headerType == 'month'" @pick="handleMonthPick"></e-month-table>
-        <e-year-table :date="date" v-show="headerType == 'year'" @pick="handleYearPick"></e-year-table>
-      </div>
-    </div>
+    </e-popper>
   </div>
 </template>
 
@@ -38,10 +41,14 @@ import EInput from "../../input/src/input.vue";
 import EYearTable from "./table/year.vue";
 import EMonthTable from "./table/month.vue";
 import EDateTable from "./table/date.vue";
+import EPopper from "../../popper/src/popper.vue";
 import dateUtil from "@/utils/date-util";
-
+import popupClick from "@/utils/directives/popup-click";
 export default {
   name: "EDatePicker",
+  directives: {
+    popupClick,
+  },
   provide() {
     return {
       EDatePicker: this,
@@ -52,6 +59,7 @@ export default {
     EYearTable,
     EMonthTable,
     EDateTable,
+    EPopper,
   },
   props: {
     type: String,
@@ -78,6 +86,7 @@ export default {
       selectYearValue: "",
       selectMonthValue: "",
       selectDayValue: "",
+      visible: false,
     };
   },
   computed: {
@@ -111,6 +120,9 @@ export default {
     }
   },
   methods: {
+    hanldeFocus() {
+      this.visible = true;
+    },
     /** 切换上一年 */
     handlePrevYear() {
       if (this.headerType == "year") {
@@ -161,6 +173,7 @@ export default {
         let year = new Date(new Date().setFullYear(value));
         this.selectYearValue = value;
         this.$emit("input", new Date(year));
+        this.visibleFn();
       }
       if (this.type == "month") {
         this.selectYearValue = value;
@@ -185,6 +198,7 @@ export default {
         newValue.setMonth(this.selectMonthValue);
         let year = new Date(newValue);
         this.$emit("input", new Date(year));
+        this.visibleFn();
       } else {
         this.headerType = "date";
         this.selectMonthValue = cell.month;
@@ -206,6 +220,12 @@ export default {
       newValue.setDate(this.selectDayValue);
       let year = new Date(newValue);
       this.$emit("input", new Date(year));
+      this.visibleFn();
+    },
+    visibleFn() {
+      setTimeout(() => {
+        this.visible = false;
+      }, 0);
     },
   },
 };
@@ -214,12 +234,7 @@ export default {
 <style lang="stylus" scoped>
 .e-picker-panel {
   color: #606266;
-  border: 1px solid #e4e7ed;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  background: #fff;
-  border-radius: 4px;
   line-height: 30px;
-  margin: 5px 0;
   width: 292px;
 
   .e-date-picker__header {
