@@ -74,6 +74,14 @@
             <e-radio label="2">备选项1</e-radio>
           </e-radio-group>
         </e-form-item>
+        <e-form-item label="时间" prop="date">
+          <e-date-picker
+            v-model="typicalForm.date"
+            type="date"
+            format="yyyy-MM-dd"
+            placeholder="选择年月日"
+          ></e-date-picker>
+        </e-form-item>
         <e-form-item label="复选框组" prop="type">
           <e-checkbox-group v-model="typicalForm.type">
             <e-checkbox label="复选框 A"></e-checkbox>
@@ -110,6 +118,7 @@ export default {
         region: "",
         delivery: false,
         sex: "1",
+        date: "",
         type: ["复选框 A"],
         resource: "",
         desc: "",
@@ -127,6 +136,14 @@ export default {
         type: [
           {
             type: "array",
+            required: true,
+            message: "必填项",
+            trigger: "change",
+          },
+        ],
+        date: [
+          {
+            type: "date",
             required: true,
             message: "必填项",
             trigger: "change",

@@ -225,6 +225,7 @@ export default {
     visibleFn() {
       setTimeout(() => {
         this.visible = false;
+        this.$parent.$emit("validate");
       }, 0);
     },
   },
