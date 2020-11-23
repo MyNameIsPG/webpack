@@ -1,5 +1,5 @@
 <template>
-  <e-popper :visible="visible" width="100%" height="184px">
+  <e-popper :visible="visible" width="100%" :height="height">
     <ul class="e-select-dropdown__list">
       <slot></slot>
     </ul>
@@ -15,6 +15,18 @@ export default {
   },
   props: {
     visible: Boolean,
+  },
+  data() {
+    return {
+      height: "auto",
+    };
+  },
+  mounted() {
+    if (this.$children[0].$children.length > 5) {
+      this.height = "184px";
+    } else {
+      this.height = "auto";
+    }
   },
 };
 </script>

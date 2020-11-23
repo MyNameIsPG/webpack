@@ -21,6 +21,16 @@
         ></e-option>
       </e-select>
     </baseLayout>
+    <baseLayout title="有禁用选项">
+      <e-select v-model="value2" placeholder="请选择">
+        <e-option
+          v-for="item in options2"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></e-option>
+      </e-select>
+    </baseLayout>
     <baseLayout title="禁用状态" subTitle="选择器不可用状态">
       <e-select v-model="value3" placeholder="请选择" disabled>
         <e-option
@@ -71,6 +81,21 @@ export default {
         {
           value: "选项6",
           label: "北京烤鸭",
+        },
+      ],
+      options2: [
+        {
+          value: "选项1",
+          label: "黄金糕",
+        },
+        {
+          value: "选项2",
+          label: "双皮奶",
+        },
+        {
+          value: "选项3",
+          label: "蚵仔煎",
+          disabled: true,
         },
       ],
       value1: "选项1",
