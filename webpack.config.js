@@ -20,6 +20,7 @@ module.exports = {
     contentBase: path.join(__dirname, "dist"), // 服务器的根路径
     open: true,
     port: 2001,
+    clientLogLevel: "silent"
   },
   resolve: {
     extensions: [".js", ".ts", ".json", ".vue"],

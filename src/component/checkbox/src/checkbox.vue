@@ -4,6 +4,7 @@
     :class="[
       model ? 'e-checkbox-checked' : '',
       disabled ? 'e-checkbox-disabled' : '',
+      indeterminate ? 'e-checkbox-indeterminate' : ''
     ]"
   >
     <span class="e-checkbox__input">
@@ -21,7 +22,7 @@
       />
     </span>
     <span class="e-checkbox__label">
-      <slot>{{ label }}</slot>
+      <slot>{{ getLabel }}</slot>
     </span>
   </label>
 </template>
@@ -41,6 +42,7 @@ export default {
     value: [String, Number, Boolean],
     label: [String, Number, Boolean],
     disabled: Boolean,
+    indeterminate: Boolean,
   },
   data() {
     return {
@@ -48,6 +50,9 @@ export default {
     };
   },
   computed: {
+    getLabel() {
+      return this.label ? this.label : "";
+    },
     isGroup() {
       let parent = this.$parent;
       while (parent) {

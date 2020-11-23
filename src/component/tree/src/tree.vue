@@ -1,68 +1,46 @@
 <template>
   <div>
-    ETree
     <ul class="e-tree">
-      <li class="e-treeitem">
-        <div class="e-treeitem_content">
-          <span class="treeitem_content_icon">
-            <i class="icon-e-turning-right"></i>
-          </span>
-          <span class="treeitem_content_label">名称</span>
-        </div>
-        <ul class="e-tree">
-          <li class="e-treeitem">
-            <div class="e-treeitem_content">
-              <span class="treeitem_content_icon">
-                <i class="icon-e-turning-right"></i>
-              </span>
-              <span class="treeitem_content_label">名称</span>
-            </div>
-          </li>
-          <li class="e-treeitem">
-            <div class="e-treeitem_content">
-              <span class="treeitem_content_icon">
-                <i class="icon-e-turning-right"></i>
-              </span>
-              <span class="treeitem_content_label">名称</span>
-            </div>
-          </li>
-        </ul>
-      </li>
-      <li class="e-treeitem">
-        <div class="e-treeitem_content">
-          <span class="treeitem_content_icon">
-            <i class="icon-e-turning-right"></i>
-          </span>
-          <span class="treeitem_content_label">名称</span>
-        </div>
-        <ul class="e-tree">
-          <li class="e-treeitem">
-            <div class="e-treeitem_content">
-              <span class="treeitem_content_icon">
-                <i class="icon-e-turning-right"></i>
-              </span>
-              <span class="treeitem_content_label">名称</span>
-            </div>
-          </li>
-        </ul>
-      </li>
+      <e-tree-item v-for="item in data" :key="item.id" :root="item"></e-tree-item>
     </ul>
   </div>
 </template>
 
 <script>
+import ETreeItem from "./tree-item.vue";
+import TreeStore from "./tree-store";
 export default {
   name: "ETree",
+  components: {
+    ETreeItem,
+  },
   props: {
     data: {
       type: Array,
       default: [],
     },
+    props: {
+      default() {
+        return {
+          children: "children",
+          label: "label",
+          disabled: "disabled",
+        };
+      },
+    },
   },
   data() {
     return {
-      root: JSON,
+      store: null,
+      root: null,
     };
+  },
+  created() {
+    this.store = new TreeStore({
+      data: this.data,
+      props: this.props,
+    });
+    this.root = this.store.root
   },
 };
 </script>
@@ -75,31 +53,6 @@ export default {
 
   &.e-tree {
     padding-left: 20px;
-  }
-
-  .e-treeitem {
-    .e-treeitem_content {
-      display: flex;
-      align-items: center;
-      height: 26px;
-      cursor: pointer;
-
-      &:hover {
-        background: #f5f7fa;
-      }
-
-      .treeitem_content_icon {
-        i {
-          font-size: 20px;
-          cursor: pointer;
-          color: #c0c4cc;
-        }
-      }
-
-      .treeitem_content_label {
-        font-size: 14px;
-      }
-    }
   }
 }
 </style>

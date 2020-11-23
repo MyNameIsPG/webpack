@@ -21,7 +21,7 @@
       title="indeterminate 状态"
       subTitle="indeterminate 属性用以表示 checkbox 的不确定状态，一般用于实现全选的效果"
     >
-      <e-checkbox :indeterminate="isIndeterminate" v-model="checked1">全选/反选</e-checkbox>
+      <e-checkbox :indeterminate="isIndeterminate" v-model="checked2">全选/反选</e-checkbox>
       <br />
       <br />
       <e-checkbox-group v-model="checkedCities">
