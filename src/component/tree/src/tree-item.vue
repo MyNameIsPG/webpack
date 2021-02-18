@@ -1,16 +1,16 @@
 <template>
-  <li class="e-treeitem">
-    <div class="e-treeitem_content">
-      <span class="treeitem_content_icon">
-        <i class="icon-e-turning-right"></i>
+  <li class="e-treeitem" :class="{ 'is-expanded': root.expanded }">
+    <div class="e-treeitem_content" :style="{ 'padding-left': (root.level - 1) * indent + 'px' }">
+      <span class="treeitem_content_icon" :class="[root.children && root.children.length > 0 ? '' : 'is-leaf']">
+        <i @click="handleExpandIconClick(root)" :class="[root.expanded ? 'icon-e-turning-down' : 'icon-e-turning-right']"></i>
       </span>
-      <span class="treeitem_checkbox">
-        <e-checkbox v-model="check"></e-checkbox>
+      <span class="treeitem_checkbox" v-if="showCheckbox">
+        <e-checkbox v-model="root.checked" @change="handleCheckedClick"></e-checkbox>
       </span>
-      <span class="treeitem_content_label">{{root.label}}</span>
+      <span class="treeitem_content_label">{{root.text}}</span>
     </div>
-    <ul class="e-tree" v-if="root.children && root.children.length>0">
-      <e-tree-item v-for="item in root.children" :key="item.id" :root="item"></e-tree-item>
+    <ul class="e-tree" v-if="root.children">
+      <e-tree-item v-for="item in root.children" :key="item.id" :root="item" :show-checkbox="showCheckbox" :indent="indent"></e-tree-item>
     </ul>
   </li>
 </template>
@@ -24,12 +24,40 @@ export default {
   },
   props: {
     root: Object,
+    showCheckbox: {
+      type: Boolean,
+      default: false
+    },
+    indent: {
+      type: Number,
+      default: 18
+    },
   },
   data() {
     return {
       check: false,
     };
   },
+  methods: {
+    handleExpandIconClick(data) {
+      data.expanded = !data.expanded
+    },
+    handleCheckedClick(val) {
+      // 选中
+      if(this.root.children){
+        this.selectAll(this.root.children, val)
+      }
+      // 反选
+    },
+    selectAll(data, flag) {
+      data.map(item => {
+        item.checked = flag
+        if(item.children && item.children.length>0) {
+          this.selectAll(item.children, flag)
+        }
+      });
+    }
+  }
 };
 </script>
 
@@ -38,10 +66,6 @@ export default {
   list-style: none;
   color: #606266;
   padding: 0px;
-
-  &.e-tree {
-    padding-left: 20px;
-  }
 }
 
 .e-treeitem {
@@ -66,6 +90,14 @@ export default {
         cursor: pointer;
         color: #c0c4cc;
       }
+      &.is-leaf {
+        cursor: default;
+        width: 18px;
+        height: 20px;
+        i {
+          display none
+        }
+      }
     }
 
     .treeitem_checkbox {
@@ -86,6 +118,12 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+  }
+
+  &.is-expanded {
+    .e-tree {
+      display: none;
     }
   }
 }

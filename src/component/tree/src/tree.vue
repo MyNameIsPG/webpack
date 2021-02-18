@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul class="e-tree">
-      <e-tree-item v-for="item in data" :key="item.id" :root="item"></e-tree-item>
+      <e-tree-item v-for="item in store" :key="item.id" :root="item" :show-checkbox="showCheckbox" :indent="indent"></e-tree-item>
     </ul>
   </div>
 </template>
@@ -28,20 +28,27 @@ export default {
         };
       },
     },
+    showCheckbox: {
+      type: Boolean,
+      default: false
+    },
+    indent: {
+      type: Number,
+      default: 18
+    },
   },
   data() {
     return {
-      store: null,
-      root: null,
+      store: [],
     };
   },
   created() {
-    this.store = new TreeStore({
-      data: this.data,
+    const store = new TreeStore({
+      data: JSON.parse(JSON.stringify(this.data)),
       props: this.props,
     });
-    this.root = this.store.root
-  },
+    this.store = store.data
+  }
 };
 </script>
 

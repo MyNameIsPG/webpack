@@ -8,39 +8,39 @@ class Node {
     }
     this.setData(this.data);
   }
-  setData (data) {
-    this.data = data
-    this.transforData(this.data);
-    console.log(this)
+  setData(data) {
+    this.data = data;
+    this.transforData(this.data, 0);
   }
-  transforData (data) {
+  transforData(data, n) {
+    let level = n || 0;
+    level++;
     if (data.length > 0) {
-      data.forEach(item => {
+      data.forEach((item) => {
+        item.data = JSON.parse(JSON.stringify(item));
         item.id = nodeIdSeed++;
         item.checked = false;
         item.indeterminate = false;
-        item.data = item;
-        item.expanded = false;
+        item.expanded = item.expanded ? item.expanded : false;
         item.visible = true;
         item.isCurrent = false;
+        item.level = level;
         item.text = item[this.store.props.label];
         if (item.children && item.children.length > 0) {
-          this.transforData(item.children)
+          this.transforData(item.children, level);
         }
-      })
-      debugger
+      });
     }
   }
-  insertChild (child) {
+  insertChild(child) {
     if (child.children) {
       this.childNodes = new Node({
         data: item.children,
-        store: this.store
-      })
+        store: this.store,
+      });
     } else {
-      this.childNodes = []
+      this.childNodes = [];
     }
-    console.log(child)
   }
 }
 
@@ -51,12 +51,11 @@ class TreeStore {
         this[option] = options[option];
       }
     }
-    this.root = new Node({
+    return new Node({
       data: this.data,
-      store: this
+      store: this,
     });
-    console.log(this)
   }
 }
 
-export default TreeStore
+export default TreeStore;
