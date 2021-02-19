@@ -5,7 +5,7 @@
         <i @click="handleExpandIconClick(root)" :class="[root.expanded ? 'icon-e-turning-down' : 'icon-e-turning-right']"></i>
       </span>
       <span class="treeitem_checkbox" v-if="showCheckbox">
-        <e-checkbox v-model="root.checked" @change="handleCheckedClick"></e-checkbox>
+        <e-checkbox v-model="root.checked" @change="handleCheckedClick" :indeterminate="root.indeterminate"></e-checkbox>
       </span>
       <span class="treeitem_content_label">{{root.text}}</span>
     </div>
@@ -38,6 +38,34 @@ export default {
       check: false,
     };
   },
+  created() {
+    if (this.$parent) this.tree = this.$parent
+
+    this.$on('check', (data, ischecked) => {
+      console.log(data, ischecked)
+      // 设置选中状态
+      if (this.root.children) {
+        const arrs = this.root.children.filter(v => v.checked)
+        if (arrs.length === 0) {
+          this.root.checked = false
+          this.tree.$emit('check', this.root, false)
+        } else if (arrs.length > 0 && arrs.length < this.root.children.length) {
+          this.root.indeterminate = true
+          this.root.checked = false
+          this.tree.$emit('check', this.root, false)
+        } else {
+          this.root.checked = true
+          this.root.indeterminate = false
+          this.tree.$emit('check', this.root, true)
+        }
+
+        if (this.root.children.filter(v => v.indeterminate).length > 0) {
+          this.root.indeterminate = true
+          this.tree.$emit('check', this.root, false)
+        }
+      }
+    })
+  },
   methods: {
     handleExpandIconClick(data) {
       data.expanded = !data.expanded
@@ -48,6 +76,7 @@ export default {
         this.selectAll(this.root.children, val)
       }
       // 反选
+      this.tree.$emit('check', this.root, val)
     },
     selectAll(data, flag) {
       data.map(item => {
