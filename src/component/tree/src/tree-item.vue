@@ -1,7 +1,7 @@
 <template>
   <li class="e-treeitem" :class="{ 'is-expanded': root.expanded }">
     <div class="e-treeitem_content" :style="{ 'padding-left': (root.level - 1) * indent + 'px' }">
-      <span class="treeitem_content_icon" :class="[root.children && root.children.length > 0 ? '' : 'is-leaf']">
+      <span class="treeitem_content_icon" :class="[root[props.children] && root[props.children].length > 0 ? '' : 'is-leaf']">
         <i @click="handleExpandIconClick(root)" :class="[root.expanded ? 'icon-e-turning-down' : 'icon-e-turning-right']"></i>
       </span>
       <span class="treeitem_checkbox" v-if="showCheckbox">
@@ -9,8 +9,8 @@
       </span>
       <span class="treeitem_content_label">{{root.text}}</span>
     </div>
-    <ul class="e-tree" v-if="root.children">
-      <e-tree-item v-for="item in root.children" :key="item.id" :root="item" :show-checkbox="showCheckbox" :indent="indent"></e-tree-item>
+    <ul class="e-tree" v-if="root[props.children]">
+      <e-tree-item v-for="item in root[props.children]" :key="item.id" :root="item" :show-checkbox="showCheckbox" :indent="indent" :props="props"></e-tree-item>
     </ul>
   </li>
 </template>
@@ -32,22 +32,19 @@ export default {
       type: Number,
       default: 18
     },
-  },
-  data() {
-    return {
-      check: false,
-    };
+    props: {
+      type: Object
+    }
   },
   created() {
     if (this.$parent) this.tree = this.$parent
-
     this.$on('check', (data, ischecked) => {
-      console.log(data, ischecked)
       // 设置选中状态
       if (this.root.children) {
         const arrs = this.root.children.filter(v => v.checked)
         if (arrs.length === 0) {
           this.root.checked = false
+          this.root.indeterminate = false
           this.tree.$emit('check', this.root, false)
         } else if (arrs.length > 0 && arrs.length < this.root.children.length) {
           this.root.indeterminate = true

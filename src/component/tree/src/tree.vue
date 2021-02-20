@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul class="e-tree">
-      <e-tree-item v-for="item in store" :key="item.id" :root="item" :show-checkbox="showCheckbox" :indent="indent"></e-tree-item>
+      <e-tree-item v-for="item in store" :key="item.id" :root="item" :show-checkbox="showCheckbox" :indent="indent" :props="props" @check="check"></e-tree-item>
     </ul>
   </div>
 </template>
@@ -20,11 +20,13 @@ export default {
       default: [],
     },
     props: {
+      type: Object,
       default() {
         return {
           children: "children",
           label: "label",
           disabled: "disabled",
+          checked: "checked"
         };
       },
     },
@@ -48,6 +50,11 @@ export default {
       props: this.props,
     });
     this.store = store.data
+  },
+  methods: {
+    check(data, isChecked) {
+      this.$emit('check', data.data, isChecked)
+    }
   }
 };
 </script>

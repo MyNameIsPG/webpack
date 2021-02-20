@@ -19,15 +19,15 @@ class Node {
       data.forEach((item) => {
         item.data = JSON.parse(JSON.stringify(item));
         item.id = nodeIdSeed++;
-        item.checked = false;
+        item.checked = item[this.store.props.checked] ? item[this.store.props.checked] : false;
         item.indeterminate = false;
         item.expanded = item.expanded ? item.expanded : false;
         item.visible = true;
         item.isCurrent = false;
         item.level = level;
         item.text = item[this.store.props.label];
-        if (item.children && item.children.length > 0) {
-          this.transforData(item.children, level);
+        if (item[this.store.props.children] && item[this.store.props.children].length > 0) {
+          this.transforData(item[this.store.props.children], level);
         }
       });
     }
